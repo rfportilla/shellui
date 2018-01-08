@@ -1,0 +1,23 @@
+SHUtils Sample
+======
+
+`SHUtils Sample` sample_shutils.py contains snippets of code to demonstrate utilization of the SHUtils Library
+
+##Installation
+
+Checkout contents of this folder.
+
+To Install:
+	Import ALL files in this folder.
+	Python run the sample_shutils.py program
+	-python sample_shutils.py
+
+To upgrade, checkout repository again and confirm new changes.
+
+##Contributions
+
+If you rather add functionality to `SHUtils`, just clone the repository!
+Run:
+
+    git clone http://username@gitscm.cisco.com/scm/sa/shutils.git
+
