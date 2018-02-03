@@ -3,8 +3,8 @@
 import unittest
 from mock import patch
 
-import shellui
-import constants
+from shellui.shellui import ShellUI, SHLog, SHConfig
+from . import constants as c
 import os
 
 
@@ -12,7 +12,7 @@ class TestshelluiLogger(unittest.TestCase):
     """Unit test class for shellui classes and methods"""
 
     def setUp(self):
-        self.shutil = shellui.ShellUI()
+        self.shutil = ShellUI()
         self.shutil.logging_create(filename='log_one.log', filemode='a', format='%(levelname)s:%(filename)s: %(message)s')
 
     def tearDown(self):
@@ -26,46 +26,46 @@ class TestshelluiLogger(unittest.TestCase):
         lvl = 10
         self.shutil.logmsg(lvl, msg)
 
-    @patch.object(shellui.SHLog, 'logdebug')
+    @patch.object(SHLog, 'logdebug')
     def test_debug_message(self, mocklogger):
         msg = "debug"
         self.shutil.logdebug(msg)
         mocklogger.assert_called_once_with(msg)
 
-    @patch.object(shellui.SHLog, 'loginfo')
+    @patch.object(SHLog, 'loginfo')
     def test_info_message(self, mocklogger):
         msg = "info"
         self.shutil.loginfo(msg)
         mocklogger.assert_called_once_with(msg)
-    @patch.object(shellui.SHLog, 'logwarning')
+    @patch.object(SHLog, 'logwarning')
     def test_warning_message(self, mocklogger):
         msg = "warning"
         self.shutil.logwarning(msg)
         mocklogger.assert_called_once_with(msg)
 
-    @patch.object(shellui.SHLog, 'logerror')
+    @patch.object(SHLog, 'logerror')
     def test_error_message(self, mocklogger):
         msg = "error"
         self.shutil.logerror(msg)
         mocklogger.assert_called_once_with(msg)
 
-    @patch.object(shellui.SHLog, 'logcritical')
+    @patch.object(SHLog, 'logcritical')
     def test_critical_message(self, mocklogger):
         msg = "critical"
         self.shutil.logcritical(msg)
         mocklogger.assert_called_once_with(msg)
 
-    @patch.object(shellui.SHLog, 'setlevel')
+    @patch.object(SHLog, 'setlevel')
     def test_level_setting(self, mocklogger):
-        self.shutil.setlevel(constants.DLEVEL)
-        mocklogger.assert_called_once_with(constants.DLEVEL)
+        self.shutil.setlevel(c.DLEVEL)
+        mocklogger.assert_called_once_with(c.DLEVEL)
 
-    @patch.object(shellui.SHLog, 'logging_disable')
+    @patch.object(SHLog, 'logging_disable')
     def test_disable_logging(self, mocklogger):
         self.shutil.logging_disable()
         mocklogger.assert_called_once_with()
 
-    @patch.object(shellui.SHLog, 'logging_enable')
+    @patch.object(SHLog, 'logging_enable')
     def test_enable_logging(self, mocklogger):
         self.shutil.logging_enable()
         mocklogger.assert_called_once_with()
@@ -73,58 +73,58 @@ class TestshelluiLogger(unittest.TestCase):
 class TestshelluiConfigs(unittest.TestCase):
     
     def setUp(self):
-        self.shutil = shellui.ShellUI()
+        self.shutil = ShellUI()
 
 
     def tearDown(self):
         self.shutil = None
-        os.system(constants.CLEAR_OUT)
+        os.system(c.CLEAR_OUT)
 
 
-    @patch.object(shellui.SHConfig, 'import_json')
+    @patch.object(SHConfig, 'import_json')
     def test_import_json(self, mocklogger):
-        self.shutil.import_json(constants.JSON_SAMPLE)
-        mocklogger.assert_called_once_with(constants.JSON_SAMPLE)
+        self.shutil.import_json(c.JSON_SAMPLE)
+        mocklogger.assert_called_once_with(c.JSON_SAMPLE)
 
-    @patch.object(shellui.SHConfig, 'import_csv')
+    @patch.object(SHConfig, 'import_csv')
     def test_import_csv(self, mocklogger):
-        self.shutil.import_csv(constants.CSV_SAMPLE)
-        mocklogger.assert_called_once_with(constants.CSV_SAMPLE)
+        self.shutil.import_csv(c.CSV_SAMPLE)
+        mocklogger.assert_called_once_with(c.CSV_SAMPLE)
 
-    @patch.object(shellui.SHConfig, 'import_csv')
+    @patch.object(SHConfig, 'import_csv')
     def test_import_dif_delimiter_sv(self, mocklogger):
-        self.shutil.import_csv(constants.CSV_SAMPLE, delimiter='\t')
-        mocklogger.assert_called_once_with(constants.CSV_SAMPLE, delimiter='\t')
+        self.shutil.import_csv(c.CSV_SAMPLE, delimiter='\t')
+        mocklogger.assert_called_once_with(c.CSV_SAMPLE, delimiter='\t')
 
-    @patch.object(shellui.SHConfig, 'import_xml')
+    @patch.object(SHConfig, 'import_xml')
     def test_import_xml(self, mocklogger):
-        self.shutil.import_xml(constants.XML_SAMPLE)
-        mocklogger.assert_called_once_with(constants.XML_SAMPLE)
+        self.shutil.import_xml(c.XML_SAMPLE)
+        mocklogger.assert_called_once_with(c.XML_SAMPLE)
 
-    @patch.object(shellui.SHConfig, 'export_json')
+    @patch.object(SHConfig, 'export_json')
     def test_export_json(self, mocklogger):
-        self.shutil.export_json(constants.JSON_OUT, constants.LIST_DICTS)
-        mocklogger.assert_called_once_with(constants.JSON_OUT, constants.LIST_DICTS)
+        self.shutil.export_json(c.JSON_OUT, c.LIST_DICTS)
+        mocklogger.assert_called_once_with(c.JSON_OUT, c.LIST_DICTS)
 
-    @patch.object(shellui.SHConfig, 'export_csv')
+    @patch.object(SHConfig, 'export_csv')
     def test_export_csv(self, mocklogger):
-        self.shutil.export_csv(constants.CSV_OUT, constants.LIST_DICTS)
-        mocklogger.assert_called_once_with(constants.CSV_OUT, constants.LIST_DICTS)
+        self.shutil.export_csv(c.CSV_OUT, c.LIST_DICTS)
+        mocklogger.assert_called_once_with(c.CSV_OUT, c.LIST_DICTS)
 
-    @patch.object(shellui.SHConfig, 'export_csv')
+    @patch.object(SHConfig, 'export_csv')
     def test_export_dif_delimiter_sv(self, mocklogger):
-        self.shutil.export_csv(constants.TSV_OUT, constants.LIST_DICTS, delimiter='\t')
-        mocklogger.assert_called_once_with(constants.TSV_OUT, constants.LIST_DICTS, delimiter='\t')
+        self.shutil.export_csv(c.TSV_OUT, c.LIST_DICTS, delimiter='\t')
+        mocklogger.assert_called_once_with(c.TSV_OUT, c.LIST_DICTS, delimiter='\t')
 
-    @patch.object(shellui.SHConfig, 'export_csv')
+    @patch.object(SHConfig, 'export_csv')
     def test_export_dif_header_csv(self, mocklogger):
-        self.shutil.export_csv(constants.CSV_OUT, constants.LIST_DICTS, header=constants.HEADER_SAMPLE)
-        mocklogger.assert_called_once_with(constants.CSV_OUT, constants.LIST_DICTS, header=constants.HEADER_SAMPLE)
+        self.shutil.export_csv(c.CSV_OUT, c.LIST_DICTS, header=c.HEADER_SAMPLE)
+        mocklogger.assert_called_once_with(c.CSV_OUT, c.LIST_DICTS, header=c.HEADER_SAMPLE)
 
-    @patch.object(shellui.SHConfig, 'export_xml')
+    @patch.object(SHConfig, 'export_xml')
     def test_export_export_xml(self, mocklogger):
-        self.shutil.export_xml(constants.XML_OUT, constants.LIST_DICTS)
-        mocklogger.assert_called_once_with(constants.XML_OUT, constants.LIST_DICTS)
+        self.shutil.export_xml(c.XML_OUT, c.LIST_DICTS)
+        mocklogger.assert_called_once_with(c.XML_OUT, c.LIST_DICTS)
 
 if __name__ == '__main__':
     unittest.main()
